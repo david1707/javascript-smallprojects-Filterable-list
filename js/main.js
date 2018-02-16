@@ -35,10 +35,10 @@
 
             // Get names and first letter of each name
             let namesList = fetchNames();    
-            namesList.sort();
-
+            
             // Only show names if there is names in storage
             if (namesList !== null) {
+                namesList.sort();
                 // Get the first letter of each name...
                 let firstLetterList = firstLetterListFromNames(namesList);
                 
