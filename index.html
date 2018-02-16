@@ -8,7 +8,7 @@
 
     <title>My Contacts</title>
 </head>
-<body>
+<body onload="populateList()">
     <div class="container">
         <h1 class="center-align">
             My contacts
@@ -21,42 +21,7 @@
             <li class="collection-item">
                 <a href="#">Abe</a>
             </li>
-            <li class="collection-item">
-                <a href="#">Adam</a>
-            </li>
-            <li class="collection-item">
-                <a href="#">Alan</a>
-            </li>
-            <li class="collection-item">
-                <a href="#">Anna</a>
-            </li>
-            <li class="collection-header">
-                <h5>B</h5>
-            </li>
-            <li class="collection-item">
-                <a href="#">Beth</a>
-            </li>
-            <li class="collection-item">
-                <a href="#">Bill</a>
-            </li>
-            <li class="collection-item">
-                <a href="#">Bob</a>
-            </li>
-            <li class="collection-item">
-                <a href="#">Brad</a>
-            </li>
-            <li class="collection-header">
-                <h5>C</h5>
-            </li>
-            <li class="collection-item">
-                <a href="#">Carrie</a>
-            </li>
-            <li class="collection-item">
-                <a href="#">Cathy</a>
-            </li>
-            <li class="collection-item">
-                <a href="#">Courtney</a>
-            </li>
+
         </ul>
     </div>
 
@@ -87,6 +52,48 @@
                 }
             }
 
+        }
+
+        function populateList(){
+            // Get names and first letter of each name
+            let namesList = ['David', 'Anna', 'Diana'].sort();
+            let firstLetter = firstLetterFromNames(namesList);
+            
+            createLiFirstLetter(firstLetter);
+
+            namesList.forEach(name => {
+      
+            });
+
+        }
+
+        function firstLetterFromNames(namesList){
+            var firstLetter = []
+            
+            // Add each first letter to the array unless is already there
+            namesList.forEach(name => {
+                var letter = name.substring(0, 1);
+                
+                if (!firstLetter.find(x => x === letter)) {
+                    firstLetter.push(letter);
+                };
+            });
+            
+            return firstLetter;
+        }
+
+        function createLiFirstLetter(firstLetter){
+            firstLetter.forEach(letter => {
+                let names = document.getElementById("names");
+                let liElem = document.createElement('li');
+                let h5Elem = document.createElement('h5');
+                let text = document.createTextNode(letter);
+                liElem.classList.add('collection-header');
+                liElem.setAttribute('id', letter);
+                h5Elem.appendChild(text);
+                liElem.appendChild(h5Elem);
+                names.appendChild(liElem);
+            });
         }
     </script>
 </body>
