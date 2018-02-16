@@ -1,7 +1,10 @@
-        // Get input element
+        // OnKeyUp, filter input
         let filterInput = document.getElementById('filterInput');
-        // Add listener
         filterInput.addEventListener('keyup', filterNames);
+
+        // Show modal to add new names
+        let modalButton = document.getElementById('modalButton');
+        modalButton.addEventListener('click', addNameModal);
 
         function filterNames(){
             // Get value of the input
@@ -31,18 +34,29 @@
             document.getElementById('names').innerHTML = '';
 
             // Get names and first letter of each name
-            let namesList = ['David', 'Anna', 'Diana'].sort();
-            let firstLetterList = firstLetterListFromNames(namesList);
-            
-            createLiFirstLetterList(firstLetterList);
-            appendNames(namesList);
+            let namesList = fetchNames();    
+            namesList.sort();
 
-            namesList.forEach(name => {
-      
-            });
+            // Only show names if there is names in storage
+            if (namesList !== null) {
+                // Get the first letter of each name...
+                let firstLetterList = firstLetterListFromNames(namesList);
+                
+                // ..and create the elements
+                createLiFirstLetterList(firstLetterList);
 
+                // Add names to each element
+                appendNames(namesList); 
+            }
         }
 
+        // Fetches all tne names on localStorage
+        function fetchNames(){
+            var fetchNamesList = JSON.parse(localStorage.getItem('modalNames'));
+            return fetchNamesList;
+        }
+
+        // Returns the first letter of each name (no repeat)
         function firstLetterListFromNames(namesList){
             var firstLetterList = []
             
@@ -58,6 +72,7 @@
             return firstLetterList;
         }
 
+        // Create 'first letter' element on body
         function createLiFirstLetterList(firstLetterList){
             firstLetterList.forEach(letter => {
                 let names = document.getElementById("names");
@@ -72,9 +87,10 @@
             });
         }
 
+        // Append names to 'first letter' elements
         function appendNames(namesList){
             namesList.forEach(name => {
-                var letter = name.substring(0, 1);
+                var letter = name.substring(0, 1).toUpperCase();
                 let names = document.getElementById(letter);
                 let liElem = document.createElement('li');
                 let h5Elem = document.createElement('a');
@@ -87,11 +103,11 @@
 
         }
 
-        let modalButton = document.getElementById('modalButton');
-        modalButton.addEventListener('click', addNameModal);
+        // Formats then add the name to localStorage
         function addNameModal(){
             // Get name from input and clean it
-            let modalName = document.getElementById('modalName').value;
+            let elementName = document.getElementById('modalName').value;
+            let modalName = elementName.substring(0,1).toUpperCase() + elementName.substring(1).toLowerCase()
             document.getElementById('modalName').innerHTML = '';
 
             // If it's the first name to add
@@ -107,6 +123,7 @@
                 localStorage.setItem('modalNames', JSON.stringify(modalNames));
             }
 
+            // then re-load the body
             populateList();
         }
 
