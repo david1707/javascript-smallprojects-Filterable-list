@@ -15,16 +15,8 @@
         </h1>
         <input type="text" id="filterInput" class="center" placeholder="Search names">
         <ul id="names" class="collection with-header">
-            <li class="collection-header">
-                <h5>A</h5>
-            </li>
-            <li class="collection-item">
-                <a href="#">Abe</a>
-            </li>
-
         </ul>
     </div>
-
     <script>
         // Get input element
         let filterInput = document.getElementById('filterInput');
@@ -57,9 +49,10 @@
         function populateList(){
             // Get names and first letter of each name
             let namesList = ['David', 'Anna', 'Diana'].sort();
-            let firstLetter = firstLetterFromNames(namesList);
+            let firstLetterList = firstLetterListFromNames(namesList);
             
-            createLiFirstLetter(firstLetter);
+            createLiFirstLetterList(firstLetterList);
+            appendNames(namesList);
 
             namesList.forEach(name => {
       
@@ -67,23 +60,23 @@
 
         }
 
-        function firstLetterFromNames(namesList){
-            var firstLetter = []
+        function firstLetterListFromNames(namesList){
+            var firstLetterList = []
             
             // Add each first letter to the array unless is already there
             namesList.forEach(name => {
                 var letter = name.substring(0, 1);
                 
-                if (!firstLetter.find(x => x === letter)) {
-                    firstLetter.push(letter);
+                if (!firstLetterList.find(x => x === letter)) {
+                    firstLetterList.push(letter);
                 };
             });
             
-            return firstLetter;
+            return firstLetterList;
         }
 
-        function createLiFirstLetter(firstLetter){
-            firstLetter.forEach(letter => {
+        function createLiFirstLetterList(firstLetterList){
+            firstLetterList.forEach(letter => {
                 let names = document.getElementById("names");
                 let liElem = document.createElement('li');
                 let h5Elem = document.createElement('h5');
@@ -94,6 +87,21 @@
                 liElem.appendChild(h5Elem);
                 names.appendChild(liElem);
             });
+        }
+
+        function appendNames(namesList){
+            namesList.forEach(name => {
+                var letter = name.substring(0, 1);
+                let names = document.getElementById(letter);
+                let liElem = document.createElement('li');
+                let h5Elem = document.createElement('a');
+                let text = document.createTextNode(name);
+                liElem.classList.add('collection-item');
+                h5Elem.appendChild(text);
+                liElem.appendChild(h5Elem);
+                names.appendChild(liElem);
+            });
+
         }
     </script>
 </body>
