@@ -5,104 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-
+    <link rel="stylesheet" href="css/style.css">
     <title>My Contacts</title>
 </head>
 <body onload="populateList()">
+    <!-- Main body -->
     <div class="container">
         <h1 class="center-align">
             My contacts
         </h1>
         <input type="text" id="filterInput" class="center" placeholder="Search names">
+        <!-- Modal Trigger -->
+        <a class="waves-effect waves-light btn modal-trigger" href="#modal">Add Contact</a>
         <ul id="names" class="collection with-header">
         </ul>
     </div>
-    <script>
-        // Get input element
-        let filterInput = document.getElementById('filterInput');
-        // Add listener
-        filterInput.addEventListener('keyup', filterNames);
 
-        function filterNames(){
-            // Get value of the input
-            let filterValue = filterInput.value.toUpperCase();
-            
-            // Get names ul
-            let ul = document.getElementById('names');
-            // Get li's from ul
-            let li = ul.querySelectorAll('li.collection-item');
-            
-            // Loop through collection-items li's
-            for (let i = 0; i < li.length;i++) {
-                let a = li[i].getElementsByTagName('a')[0];
-                // Check if matches
-                if(a.innerHTML.toUpperCase().indexOf(filterValue) > -1) {
-                    li[i].style.display = '';
-                }
-                else {
-                    li[i].style.display = 'none';
-                }
-            }
-
-        }
-
-        function populateList(){
-            // Get names and first letter of each name
-            let namesList = ['David', 'Anna', 'Diana'].sort();
-            let firstLetterList = firstLetterListFromNames(namesList);
-            
-            createLiFirstLetterList(firstLetterList);
-            appendNames(namesList);
-
-            namesList.forEach(name => {
-      
-            });
-
-        }
-
-        function firstLetterListFromNames(namesList){
-            var firstLetterList = []
-            
-            // Add each first letter to the array unless is already there
-            namesList.forEach(name => {
-                var letter = name.substring(0, 1);
-                
-                if (!firstLetterList.find(x => x === letter)) {
-                    firstLetterList.push(letter);
-                };
-            });
-            
-            return firstLetterList;
-        }
-
-        function createLiFirstLetterList(firstLetterList){
-            firstLetterList.forEach(letter => {
-                let names = document.getElementById("names");
-                let liElem = document.createElement('li');
-                let h5Elem = document.createElement('h5');
-                let text = document.createTextNode(letter);
-                liElem.classList.add('collection-header');
-                liElem.setAttribute('id', letter);
-                h5Elem.appendChild(text);
-                liElem.appendChild(h5Elem);
-                names.appendChild(liElem);
-            });
-        }
-
-        function appendNames(namesList){
-            namesList.forEach(name => {
-                var letter = name.substring(0, 1);
-                let names = document.getElementById(letter);
-                let liElem = document.createElement('li');
-                let h5Elem = document.createElement('a');
-                let text = document.createTextNode(name);
-                liElem.classList.add('collection-item');
-                h5Elem.appendChild(text);
-                liElem.appendChild(h5Elem);
-                names.appendChild(liElem);
-            });
-
-        }
-    </script>
+    <!-- Modal Structure -->
+    <div id="modal" class="modal bottom-sheet">
+        <div class="modal-content">
+          <h4>Add a new contact</h4>
+          <input type="text" placeholder="name" id="modalName">
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="modalButton">Agree</a>
+        </div>
+      </div>
+    
+    <!-- Needed for the modal -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <!-- Own JS -->
+    <script src="js/main.js"></script>
 </body>
 </html>
